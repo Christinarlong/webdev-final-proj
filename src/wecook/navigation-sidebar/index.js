@@ -17,7 +17,7 @@ const NavigationSidebar = () => {
       </NavLink>
       <NavLink
         className={`list-group-item
-                    ${active === "profile" ? "active" : ""}`}
+                    ${active === "favorites" ? "active" : ""}`}
         to="/favorites"
       >
         <i className="bi bi-star pe-2"></i>

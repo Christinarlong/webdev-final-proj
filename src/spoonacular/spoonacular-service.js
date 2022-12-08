@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const SEARCH_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY}`;
+const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+const SEARCH_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${SPOONACULAR_API_KEY}`;
 //const DETAILS_URL = 'https://omdbapi.com/?apikey=852159f0&i=';
 
 export const searchRecipeByTerm = async (term) => {
