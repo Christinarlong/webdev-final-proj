@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const NavigationSidebar = () => {
   const { pathname } = useLocation();
-  const active = pathname.split("/")[2];
+  const active = pathname.split("/")[1];
   return (
     <div className="list-group">
       <NavLink
@@ -14,14 +14,6 @@ const NavigationSidebar = () => {
       >
         <i className="bi bi-house-door pe-2"></i>
         <span className="d-none d-xl-inline">Home</span>
-      </NavLink>
-      <NavLink
-        className={`list-group-item
-                    ${active === "explore" ? "active" : ""}`}
-        to="/explore"
-      >
-        <i className="bi bi-compass pe-2"></i>
-        <span className="d-none d-xl-inline">Explore</span>
       </NavLink>
       <NavLink
         className={`list-group-item
