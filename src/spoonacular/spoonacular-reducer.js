@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { searchRecipeByTerm } from "./spoonacular-service";
-import { searchRecipeByTermThunk } from "./spoonacular-thunks";
+import { searchRecipeByTermThunk, getRecipeDetailsByIdThunk } from "./spoonacular-thunks";
 
 const initialState = {
-  movies: [],
+  recipes: [],
   loading: false,
   details: {},
 };
@@ -15,9 +14,9 @@ const spoonacularReducer = createSlice({
     [searchRecipeByTermThunk.fulfilled]: (state, action) => {
       state.recipes = action.payload;
     },
-    /*[findMovieByImdbIdThunk.fulfilled]: (state, action) => {
-            state.details = action.payload
-        }*/
+    [getRecipeDetailsByIdThunk.fulfilled]: (state, action) => {
+      state.details = action.payload
+    },
   },
 });
 

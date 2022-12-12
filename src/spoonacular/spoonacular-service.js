@@ -1,15 +1,14 @@
 import axios from "axios";
 
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
-const SEARCH_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${SPOONACULAR_API_KEY}`;
-//const DETAILS_URL = 'https://omdbapi.com/?apikey=852159f0&i=';
+const RECIPES_URL = `https://api.spoonacular.com/recipes`;
 
 export const searchRecipeByTerm = async (term) => {
-    const response = await axios.get(`${SEARCH_URL}&query=${term}`);
+    const response = await axios.get(`${RECIPES_URL}/complexSearch?instructionsRequired=true&apiKey=${SPOONACULAR_API_KEY}&query=${term}`);
     return response.data.results;
 }
 
-/*export const findMovieByImdbId = async (imdbID) => {
-    const response = await axios.get(`${DETAILS_URL}${imdbID}`)
-    return response.data
-}*/
+export const getRecipeDetailsById = async (recipeId) => {
+    const response = await axios.get(`${RECIPES_URL}/${recipeId}/information?apiKey=${SPOONACULAR_API_KEY}`);
+    return response.data;
+}

@@ -17,6 +17,14 @@ const NavigationSidebar = () => {
       </NavLink>
       <NavLink
         className={`list-group-item
+                    ${active === "explore" ? "active" : ""}`}
+        to="/explore"
+      >
+        <i className="bi bi-compass pe-2"></i>
+        <span className="d-none d-xl-inline">Explore</span>
+      </NavLink>
+      <NavLink
+        className={`list-group-item
                     ${active === "favorites" ? "active" : ""}`}
         to="/favorites"
       >
