@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getRecipeDetailsByIdThunk } from "./spoonacular-thunks";
+import parse from 'html-react-parser';
 
 const SpoonacularDetails = () => {
   const { recipeId } = useParams();
@@ -12,7 +13,6 @@ const SpoonacularDetails = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getRecipeDetailsByIdThunk(recipeId));
-    console.log(recipeId);
     //dispatch(findReviewsByMovieThunk(imdbID))
   }, []);
   return (
@@ -73,7 +73,7 @@ const SpoonacularDetails = () => {
       <h4>Ingredients</h4>
       <ul className="list-group">
         {details.extendedIngredients?.map((ingredient) => (
-          <li className="list-group-item">
+          <li className="list-group-item" key={ingredient.id}>
             <div>{`${ingredient.name}: ${ingredient.amount} ${ingredient.unit}`}</div>
             <img
               src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
@@ -82,15 +82,16 @@ const SpoonacularDetails = () => {
           </li>
         ))}
       </ul>
-      <h4>Summary</h4>
-      <div>{details.summary}</div>
+      {/* html parser is vulnerable to XSS attacks :( */}
+      {details.summary ? (<div><h4>Summary</h4>
+      <div>{parse(details.summary)}</div></div>) : <></>}
 
       {details.analyzedInstructions ? (
         <div>
           <h4>Instructions</h4>
           <ul className="list-group">
             {details.analyzedInstructions[0].steps?.map((step) => (
-              <li className="list-group-item">
+              <li className="list-group-item" key={step.number}>
                 <div>{`Step ${step.number}: ${step.step}`}</div>
               </li>
             ))}
