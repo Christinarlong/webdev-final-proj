@@ -47,6 +47,22 @@ const NavigationSidebar = () => {
         <i className="bi bi-bell pe-2"></i>
         <span className="d-none d-xl-inline">Notifications</span>
       </NavLink>
+      <NavLink
+        className={`list-group-item
+                    ${active === "login" ? "active" : ""}`}
+        to="/login"
+      >
+        <i className="bi bi-person pe-2"></i>
+        <span className="d-none d-xl-inline">Login</span>
+      </NavLink>
+      <NavLink
+        className={`list-group-item
+                    ${active === "logout" ? "active" : ""}`}
+        to="/logout"
+      >
+        <i className="bi bi-person pe-2"></i>
+        <span className="d-none d-xl-inline">Logout</span>
+      </NavLink>
     </div>
   );
 };

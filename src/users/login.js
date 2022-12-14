@@ -17,6 +17,7 @@ const Login = () => {
         }
     }
     if (currentUser) {
+        console.log(currentUser);
         return (<Navigate to={'/profile'}/>)
     }
     return(

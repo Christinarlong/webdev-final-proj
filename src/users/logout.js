@@ -4,7 +4,7 @@ import { loginThunk, logoutThunk } from "./users-thunks.js";
 import { Navigate } from "react-router";
 
 const Logout = () => {
-  const { currentUser } = useSelector((state) => state.users);
+  const {currentUser} = useSelector((state) => state.users)
   const dispatch = useDispatch();
   const handleLogoutBtn = () => {
     try {
