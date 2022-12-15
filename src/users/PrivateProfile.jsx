@@ -1,30 +1,23 @@
-import { React, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-
-import {
-	findAllRecipesLikedByUserThunk,
-	findUserByIdThunk,
-} from "./users-thunks.js";
+import { Link } from "react-router-dom";
+import { findAllRecipesLikedByUserThunk } from "./users-thunks.js";
 
 const PublicProfile = () => {
-	const { uid } = useParams();
-	const { likedByUser, publicProfile } = useSelector((state) => state.users);
-	// const [recipes, updateRecipes] = useState(likedByUser);
-
+	const { currentUser, likedByUser } = useSelector((state) => state.users);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(findAllRecipesLikedByUserThunk(uid));
-		dispatch(findUserByIdThunk(uid));
+		dispatch(findAllRecipesLikedByUserThunk(currentUser?._id));
 	}, []);
 
 	return (
 		<>
-			<h4>Public Profile</h4>
-
-			<h1>{publicProfile?.username}</h1>
-
+			<h4>Private Profile</h4>
+			<button type="button" className="btn btn-primary">
+				Edit Profile
+			</button>
+			<h1>{currentUser?.username}</h1>
 			<div className="row align-items-start">
 				<div className="col">
 					<h2>Liked Items</h2>
