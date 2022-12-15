@@ -2,9 +2,17 @@ import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { findAllRecipesLikedByUserThunk } from "./users-thunks.js";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+// import Modal from "./Modal.jsx";
 
 const PublicProfile = () => {
 	const { currentUser, likedByUser } = useSelector((state) => state.users);
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -14,7 +22,29 @@ const PublicProfile = () => {
 	return (
 		<>
 			<h4>Private Profile</h4>
-			<button type="button" className="btn btn-primary">
+
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Modal heading</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						Save Changes
+					</Button>
+				</Modal.Footer>
+			</Modal>
+
+			<button
+				type="button"
+				className="btn btn-primary"
+				onClick={handleShow}
+				data-toggle="modal"
+				data-target="#exampleModal"
+			>
 				Edit Profile
 			</button>
 			<h1>{currentUser?.username}</h1>
@@ -38,4 +68,5 @@ const PublicProfile = () => {
 		</>
 	);
 };
+
 export default PublicProfile;
