@@ -13,7 +13,7 @@ import {
 import Accordion from "react-bootstrap/Accordion";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateIngredientThunk } from "../posts/posts-thunks";
+import { deletePostThunk, updateIngredientThunk } from "../posts/posts-thunks";
 import "./plan.css";
 
 const PostCard = ({ post, canEdit = true, vote = undefined }) => {
@@ -27,7 +27,9 @@ const PostCard = ({ post, canEdit = true, vote = undefined }) => {
     dispatch(updateIngredientThunk({pid: planId, postId: post._id, ingredient: ingredient, owned: !owned}));
   };
 
-  const deleteHandler = () => {};
+  const deleteHandler = () => {
+    dispatch(deletePostThunk({planId: planId, postId: post._id}));
+  };
 
   const upvoteHandler = () => {};
 
@@ -41,7 +43,7 @@ const PostCard = ({ post, canEdit = true, vote = undefined }) => {
     <Card
       hoverable
       size="small"
-      extra={canEdit ? <i className="bi bi-x-lg closeButton"></i> : <></>}
+      extra={canEdit ? <i className="bi bi-x-lg closeButton" onClick={deleteHandler}></i> : <></>}
       style={{ width: 400 }}
       bodyStyle={{ padding: "0" }}
       title={

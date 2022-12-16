@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUsersPostsThunk, getAllPostsForPlanThunk, updateIngredientThunk, createPostThunk } from "./posts-thunks.js";
+import { getAllUsersPostsThunk, getAllPostsForPlanThunk, updateIngredientThunk, createPostThunk, deletePostThunk } from "./posts-thunks.js";
 
 const postsReducer = createSlice({
 	name: "posts",
@@ -29,6 +29,12 @@ const postsReducer = createSlice({
 		[createPostThunk.fulfilled]: (state, action) => {
 			state.lastCreatedPost = action.payload;
 			state.loading = false;
+		},
+		[deletePostThunk.fulfilled]: (state, action) => {
+			const index = state.postsForPlan.findIndex(post => post._id === action.payload._id)
+        if (index > -1) {
+            state.postsForPlan.splice(index, 1);
+        }
 		},
 	},
 });

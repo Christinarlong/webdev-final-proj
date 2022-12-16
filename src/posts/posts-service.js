@@ -31,3 +31,9 @@ export const updateIngredient = async ({pid, postId, ingredient, owned}) => {
 	const posts = response.data;
 	return posts;
 };
+
+export const deletePost = async ({pid, postId}) => {
+	const response = await api.delete(`${BASE_API_URL}/plans/${pid}/posts/${postId}`);
+	const deletedPost = response.data;
+	return deletedPost;
+};
