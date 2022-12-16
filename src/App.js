@@ -5,7 +5,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import Home from "./wecook/home";
 import NavigationSidebar from "./wecook/navigation-sidebar";
 import PublicProfile from "./users/public-profile";
-import Favorites from "./wecook/favorites";
 import MealPlans from "./wecook/meal-plans";
 import { Provider } from "react-redux";
 import spoonacularReducer from "./spoonacular/spoonacular-reducer";

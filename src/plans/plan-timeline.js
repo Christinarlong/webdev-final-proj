@@ -13,6 +13,7 @@ const PlanTimeline = ({posts, reverse = false}) => {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     return (
+      <div className="timeline_container">
         <Timeline mode={'left'} reverse={reverse} pending={<Link to={'/explore'} className="link">
         <p className='p-1'>Add more recipes!</p>
     </Link>} pendingDot={<PlusCircleTwoTone />} className="p-2">
@@ -39,6 +40,7 @@ const PlanTimeline = ({posts, reverse = false}) => {
             }
             })}
       </Timeline>
+      </div>
     );
 };
 

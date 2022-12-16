@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllPlansForUserThunk, getAllUsersForPlanThunk, addUserToPlanThunk, removeUserFromPlanThunk } from "./memberships-thunks.js";
+import { getAllPlansForUserThunk, getAllUsersForPlanThunk, addUserToPlanThunk, removeUserFromPlanThunk, updateUserForPlanThunk } from "./memberships-thunks.js";
 
 const initialState = {
     plansForUser: undefined,
@@ -41,6 +41,37 @@ const membershipsReducer = createSlice({
             }
         }
     },
+    [updateUserForPlanThunk.fulfilled]: (state, action) => {
+        let ownersArr = [...state.usersForPlan.owners];
+        let plannersArr = [...state.usersForPlan.planners];
+        let guestsArr = [...state.usersForPlan.guests];
+        let removedUser = undefined;
+        // remove user from plan
+        const index = state.usersForPlan.owners.findIndex(u => u._id === action.payload.user);
+        if (index > -1) {
+            removedUser = ownersArr.splice(index, 1)[0];
+        } else {
+            const index = state.usersForPlan.planners.findIndex(u => u._id === action.payload.user);
+            if (index > -1) {
+                removedUser = plannersArr.splice(index, 1)[0];
+            } else {
+                const index = state.usersForPlan.guests.findIndex(u => u._id === action.payload.user);
+                if (index > -1) {
+                    removedUser = guestsArr.splice(index, 1)[0];
+                };
+            }
+        }
+            
+        // add user to plan
+        if (removedUser && action.payload.role === 'owner') {
+            ownersArr.push(removedUser);
+        } else if (action.payload.role === 'planner') {
+            plannersArr.push(removedUser);
+        } else {
+            guestsArr.push(removedUser);
+        }
+        state.usersForPlan = {owners: ownersArr, planners: plannersArr, guests: guestsArr};
+    },
     [getAllPlansForUserThunk.fulfilled]: (state, action) => {
         let ownersArr = [];
         let plannersArr = [];
@@ -70,7 +101,7 @@ const membershipsReducer = createSlice({
             }
         });
         state.usersForPlan = {owners: ownersArr, planners: plannersArr, guests: guestsArr};
-    }
+    },
   },
 });
 
