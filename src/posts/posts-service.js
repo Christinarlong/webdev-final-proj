@@ -12,12 +12,16 @@ export const getAllUsersPosts = async (uid) => {
 };
 
 export const createPost = async (post) => {
-	console.log("SENT", post);
 	const response = await api.post(
 		`${BASE_API_URL}/plans/${post.planId}/posts`,
 		post.body
 	);
-	console.log("RECV", response);
+
 	const postResponse = response.data;
 	return postResponse;
+};
+export const getAllPostsForPlan = async (pid) => {
+	const response = await api.get(`${BASE_API_URL}/plans/${pid}/posts`);
+	const posts = response.data;
+	return posts;
 };
