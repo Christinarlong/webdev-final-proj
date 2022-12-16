@@ -87,10 +87,7 @@ const UserRow = (user, role) => {
           {usersForPlan.guests.map((user) => (
             user &&UserRow(user, "guest")
           ))}
-          {isOwner && <li className="list-group-item">{<h4 className="m-0">Add</h4>}</li>}
           </ul>}
-          
-      <pre>{JSON.stringify(usersForPlan, null, 2)}</pre>
     </>
   );
 };

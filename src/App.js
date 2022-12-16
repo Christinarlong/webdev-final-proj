@@ -61,7 +61,6 @@ function App() {
 											</ProtectedRoute>
 										}
 									/>
-									<Route path="favorites" element={<Favorites />} />
 									<Route
 										path="plans"
 										element={

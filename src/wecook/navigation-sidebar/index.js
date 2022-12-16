@@ -58,7 +58,7 @@ const NavigationSidebar = () => {
 				to={loginRegisterLogout}
 			>
 				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-lg-inline">Login/Logout</span>
+				<span className="d-none d-lg-inline">{currentUser ? "Logout" : "Login"}</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
