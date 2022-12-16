@@ -13,7 +13,7 @@ const NavigationSidebar = () => {
 				to="/home"
 			>
 				<i className="bi bi-house-door pe-2"></i>
-				<span className="d-none d-xl-inline">Home</span>
+				<span className="d-none d-lg-inline">Home</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
@@ -21,7 +21,7 @@ const NavigationSidebar = () => {
 				to="/explore"
 			>
 				<i className="bi bi-compass pe-2"></i>
-				<span className="d-none d-xl-inline">Explore</span>
+				<span className="d-none d-lg-inline">Explore</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
@@ -29,7 +29,7 @@ const NavigationSidebar = () => {
 				to="/plans"
 			>
 				<i className="bi bi-card-text pe-2"></i>
-				<span className="d-none d-xl-inline">Meal Plans</span>
+				<span className="d-none d-lg-inline">Meal Plans</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
@@ -37,15 +37,7 @@ const NavigationSidebar = () => {
 				to="/myprofile"
 			>
 				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-xl-inline">Profile</span>
-			</NavLink>
-			<NavLink
-				className={`list-group-item
-                    ${active === "notifications" ? "active" : ""}`}
-				to="/notifications"
-			>
-				<i className="bi bi-bell pe-2"></i>
-				<span className="d-none d-xl-inline">Notifications</span>
+				<span className="d-none d-lg-inline">Profile</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
@@ -53,7 +45,7 @@ const NavigationSidebar = () => {
 				to="/login"
 			>
 				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-xl-inline">Login</span>
+				<span className="d-none d-lg-inline">Login</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
@@ -61,7 +53,7 @@ const NavigationSidebar = () => {
 				to="/logout"
 			>
 				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-xl-inline">Logout</span>
+				<span className="d-none d-lg-inline">Logout</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
@@ -69,7 +61,7 @@ const NavigationSidebar = () => {
 				to="/users"
 			>
 				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-xl-inline">Users</span>
+				<span className="d-none d-lg-inline">Users</span>
 			</NavLink>
 		</div>
 	);

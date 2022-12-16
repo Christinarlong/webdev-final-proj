@@ -90,9 +90,9 @@ const PostCard = ({ post, canEdit = true}) => {
               <Accordion.Body>
                 { Object.keys(post.ingredients).map(ingredient => 
                 <div>
-                  {canEdit ? <Checkbox checked={post.ingredients[ingredient].owned} value={ingredient} id={ingredient} onClick={checkboxHandler}>
+                  {canEdit ? <Checkbox key={post._id + ingredient} checked={post.ingredients[ingredient].owned} value={ingredient} id={ingredient} onClick={checkboxHandler}>
                   {ingredient}, <span className="text-secondary">{post.ingredients[ingredient].amount}</span>
-                </Checkbox> : <Checkbox checked={post.ingredients[ingredient].owned} disabled>
+                </Checkbox> : <Checkbox key={post._id + ingredient} checked={post.ingredients[ingredient].owned} disabled>
                   {ingredient}, <span>{post.ingredients[ingredient].amount}</span>
                 </Checkbox>}
                 </div>

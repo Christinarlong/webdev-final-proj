@@ -25,17 +25,17 @@ const membershipsReducer = createSlice({
     },
     [removeUserFromPlanThunk.fulfilled]: (state, action) => {
         if (action.payload.role === 'owner') {
-            const index = state.usersForPlan.owners.findIndex(u => u === action.payload.user);
+            const index = state.usersForPlan.owners.findIndex(u => u._id === action.payload.user._id);
             if (index > -1) {
                 state.usersForPlan.owners.splice(index, 1);
             }
         } else if (action.payload.role === 'planner') {
-            const index = state.usersForPlan.planners.findIndex(u => u === action.payload.user);
+            const index = state.usersForPlan.planners.findIndex(u => u._id === action.payload.user._id);
             if (index > -1) {
                 state.usersForPlan.planners.splice(index, 1);
             }
         } else {
-            const index = state.usersForPlan.guests.findIndex(u => u === action.payload.user);
+            const index = state.usersForPlan.guests.findIndex(u => u._id === action.payload.user._id);
             if (index > -1) {
                 state.usersForPlan.guests.splice(index, 1);
             }
@@ -62,11 +62,11 @@ const membershipsReducer = createSlice({
         let guestsArr = [];
         action.payload.forEach(membership => {
             if (membership.role === 'owner') {
-                ownersArr.push(membership.user._id);
+                ownersArr.push(membership.user);
             } else if (membership.role === 'planner') {
-                plannersArr.push(membership.user._id);
+                plannersArr.push(membership.user);
             } else {
-                guestsArr.push(membership.user._id);
+                guestsArr.push(membership.user);
             }
         });
         state.usersForPlan = {owners: ownersArr, planners: plannersArr, guests: guestsArr};
