@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deletePostThunk, updateIngredientThunk, voteForPostThunk } from "../posts/posts-thunks";
 import "./plan.css";
 
-const PostCard = ({ post, canEdit = true}) => {
+const PostCard = ({ post, canEdit = false}) => {
   const {planId} = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const PostCard = ({ post, canEdit = true}) => {
   });
   let vote = post.votes[currentUser._id];
 
-  return (
+  return (post &&
     <Card
       hoverable
       size="small"
@@ -87,7 +87,7 @@ const PostCard = ({ post, canEdit = true}) => {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Shopping List</Accordion.Header>
               <Accordion.Body>
-                { Object.keys(post.ingredients).map(ingredient => 
+                { post.ingredients && Object.keys(post.ingredients).map(ingredient => 
                 <div key={post._id + ingredient}>
                   {canEdit ? <Checkbox key={post._id + ingredient} checked={post.ingredients[ingredient].owned} value={ingredient} id={ingredient} onClick={checkboxHandler}>
                   {ingredient}, <span className="text-secondary">{post.ingredients[ingredient].amount}</span>

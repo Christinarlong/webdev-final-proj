@@ -6,15 +6,11 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Image, Dropdown, Button } from "antd";
 import './plan.css';
 
-const PlanUsers = ({isOwner = true}) => {
+const PlanUsers = ({usersForPlan, isOwner = false}) => {
   const {currentUser} = useSelector((state) => state.users)
-  const { usersForPlan } = useSelector((state) => state.memberships);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {planId} = useParams();
-  useEffect(() => {
-    dispatch(getAllUsersForPlanThunk(planId));
-  }, [planId]);
 
   let items = [
     {
