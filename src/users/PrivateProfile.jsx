@@ -6,14 +6,16 @@ import {
 	findAllRecipesLikedByUserThunk,
 	updateUserThunk,
 } from "./users-thunks.js";
+import { findAllRecipesLikedByUserThunk } from "../favorites/favorites-thunks.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 
 const PublicProfile = () => {
-	const { currentUser, likedByUser } = useSelector((state) => state.users);
+	const { currentUser } = useSelector((state) => state.users);
 	const { posts } = useSelector((state) => state.posts);
+	const { likedByUser } = useSelector((state) => state.favorites);
 	const [show, setShow] = useState(false);
 	const [currentTab, changeTab] = useState("");
 	const dispatch = useDispatch();

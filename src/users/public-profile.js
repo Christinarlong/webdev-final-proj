@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
 import {
-	findAllRecipesLikedByUserThunk,
 	findUserByIdThunk,
 } from "./users-thunks.js";
+import { findAllRecipesLikedByUserThunk } from "../favorites/favorites-thunks.js";
 
 const PublicProfile = () => {
 	const { uid } = useParams();
-	const { likedByUser, publicProfile } = useSelector((state) => state.users);
+	const { publicProfile } = useSelector((state) => state.users);
+	const { likedByUser } = useSelector((state) => state.favorites);
 	// const [recipes, updateRecipes] = useState(likedByUser);
 
 	const dispatch = useDispatch();

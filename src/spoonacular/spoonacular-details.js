@@ -2,17 +2,21 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getRecipeDetailsByIdThunk } from "./spoonacular-thunks";
+import { getRecipeDetailsByIdThunk } from "./spoonacular-thunks"
+import { createFavoriteThunk, deleteFavoriteThunk, findUsersThatLikeRecipeThunk } from "../favorites/favorites-thunks";
 import parse from 'html-react-parser';
+import { redirect } from "react-router-dom";
 
 const SpoonacularDetails = () => {
   const { recipeId } = useParams();
   //const {reviews} = useSelector((state) => state.reviews)
   const { details } = useSelector((state) => state.spoonacular);
-  //const {currentUser} = useSelector((state) => state.users)
+  const {currentUser} = useSelector((state) => state.users)
+  const { usersThatLikeRecipe } = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getRecipeDetailsByIdThunk(recipeId));
+    dispatch(findUsersThatLikeRecipeThunk(recipeId));
     //dispatch(findReviewsByMovieThunk(imdbID))
   }, []);
   return (
@@ -37,39 +41,29 @@ const SpoonacularDetails = () => {
           />
         </div>
       </div>
-      {/*
-                currentUser && recipe.favorite ? (
+      <h4>Likes: {usersThatLikeRecipe.length}</h4>
+      {currentUser && usersThatLikeRecipe.includes(currentUser._id) ? (
                 <i
                   onClick={() =>
                     dispatch(
-                      deleteFavoriteThunk({
-                        currentUser.id,
-                        recipe.id
-                      })
+                      deleteFavoriteThunk(details.id)
                     )
                   }
                   className="float-end bi bi-heart-fill pe-2 text-danger"
                 ></i>
               ) : (
                 <i
-                  onClick={() =>
+                  onClick={() => {
+                    currentUser ? 
                     dispatch(
-                      createFavoriteThunk({
-                        currentUser.id,
-                        recipe.id
-                      })
-                    )
+                      createFavoriteThunk({recipeId: details.id, recipeName: details.title})
+                    ) :  redirect("/login")
+                  }
                   }
                   className="float-end bi bi-heart pe-2"
                 ></i>
-                )}
-                <div>
-                    <textarea
-                        onChange={(e) => setReview(e.target.value)}
-                        className="form-control"></textarea>
-                    <button onClick={handlePostReviewBtn}>Post Review</button>
-                </div>
-                */}
+                )
+                }
       <h4>Ingredients</h4>
       <ul className="list-group">
         {details.extendedIngredients?.map((ingredient) => (
