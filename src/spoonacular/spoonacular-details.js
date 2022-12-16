@@ -115,126 +115,130 @@ const SpoonacularDetails = () => {
 
 	return (
 		<>
-			<Space direction="vertical" size="middle">
-				<h1>{details.title}</h1>
+			<Space gap={3}>
+				<Space direction="vertical" size="middle">
+					<h1>{details.title}</h1>
 
-				{currentUser ? (
-					<Button type="primary" onClick={showModal}>
-						Add this Recipe to a Plan!
-					</Button>
-				) : (
-					<Button disabled type="primary" onClick={showModal}>
-						Add this Recipe to a Plan!
-					</Button>
-				)}
-				<Modal
-					title="Add Recipe to Plan"
-					open={open}
-					onOk={handleOk}
-					onCancel={handleCancel}
-				>
-					<Space wrap direction="vertical">
-						<Dropdown.Button
-							menu={{
-								items,
-								selectable: true,
-								defaultSelectedKeys: [""],
-								onClick: (e) => handleClick(e.key),
-							}}
-							trigger={["click"]}
-							icon={<DownOutlined />}
-						>
-							{selectedPlan}
-						</Dropdown.Button>
-
-						<DatePicker
-							placeholder="select a date"
-							onChange={onDatePickerChange}
-						/>
-					</Space>
-				</Modal>
-
-				<div className="row">
-					<div className="col">
-						<ul className="list-group">
-							<li className="list-group-item">Servings: {details.servings}</li>
-							<li className="list-group-item">
-								Ready in minutes: {details.readyInMinutes}
-							</li>
-							<li className="list-group-item">
-								<a href={details.sourceUrl}>Link to instructions</a>
-							</li>
-						</ul>
-					</div>
-					<div className="col m-3">
-						<img
-							src={`https://spoonacular.com/recipeImages/${recipeId}-636x393.jpg`}
-							alt={details.image}
-						/>
-					</div>
-				</div>
-
-				<div className="row d-flex justify-content-end">
-					{currentUser && usersThatLikeRecipe.includes(currentUser._id) ? (
-						<i
-							onClick={() => dispatch(deleteFavoriteThunk(details.id))}
-							className="d-flex bi bi-heart-fill pe-2 text-danger justify-content-end pr-3"
-						>
-							Likes: {usersThatLikeRecipe.length}
-						</i>
+					{currentUser ? (
+						<Button type="primary" onClick={showModal}>
+							Add this Recipe to a Plan!
+						</Button>
 					) : (
-						<i
-							onClick={() => {
-								currentUser
-									? dispatch(
-											createFavoriteThunk({
-												recipeId: details.id,
-												recipeName: details.title,
-											})
-									  )
-									: navigate("/login");
-							}}
-							className="d-flex bi bi-heart pe-2 justify-content-end pr-3"
-						>
-							<div className="pl-2">Likes: {usersThatLikeRecipe.length}</div>
-						</i>
+						<Button disabled type="primary" onClick={showModal}>
+							Add this Recipe to a Plan!
+						</Button>
 					)}
-				</div>
+					<Modal
+						title="Add Recipe to Plan"
+						open={open}
+						onOk={handleOk}
+						onCancel={handleCancel}
+					>
+						<Space wrap direction="vertical">
+							<Dropdown.Button
+								menu={{
+									items,
+									selectable: true,
+									defaultSelectedKeys: [""],
+									onClick: (e) => handleClick(e.key),
+								}}
+								trigger={["click"]}
+								icon={<DownOutlined />}
+							>
+								{selectedPlan}
+							</Dropdown.Button>
 
-				<Collapse accordion>
-					<Panel header="Ingredients" key="ingredients">
-						{details.extendedIngredients?.map((ingredient) => (
-							<li className="list-group-item" key={ingredient.id}>
-								<div>{`${ingredient.name}: ${ingredient.amount} ${ingredient.unit}`}</div>
-								<img
-									src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
-									alt={details.image}
-								/>
-							</li>
-						))}
-					</Panel>
-					{/* html parser is vulnerable to XSS attacks :( */}
-					{details.summary ? (
-						<Panel header="Summary" key="summary">
-							<div>{parse(details.summary)}</div>
-						</Panel>
-					) : (
-						<></>
-					)}
-					{details.analyzedInstructions ? (
-						<Panel header="Instructions" key="instructions">
-							{details.analyzedInstructions[0].steps?.map((step) => (
-								<ul>
-									<li className="list-group-item" key={step.number}>
-										<div>{`Step ${step.number}: ${step.step}`}</div>
-									</li>
-								</ul>
+							<DatePicker
+								placeholder="select a date"
+								onChange={onDatePickerChange}
+							/>
+						</Space>
+					</Modal>
+
+					<div className="row">
+						<div className="col">
+							<ul className="list-group">
+								<li className="list-group-item">
+									Servings: {details.servings}
+								</li>
+								<li className="list-group-item">
+									Ready in minutes: {details.readyInMinutes}
+								</li>
+								<li className="list-group-item">
+									<a href={details.sourceUrl}>Link to instructions</a>
+								</li>
+							</ul>
+						</div>
+						<div className="col m-3">
+							<img
+								src={`https://spoonacular.com/recipeImages/${recipeId}-636x393.jpg`}
+								alt={details.image}
+							/>
+						</div>
+					</div>
+
+					<div className="row d-flex justify-content-end">
+						{currentUser && usersThatLikeRecipe.includes(currentUser._id) ? (
+							<i
+								onClick={() => dispatch(deleteFavoriteThunk(details.id))}
+								className="d-flex bi bi-heart-fill pe-2 text-danger justify-content-end pr-3"
+							>
+								Likes: {usersThatLikeRecipe.length}
+							</i>
+						) : (
+							<i
+								onClick={() => {
+									currentUser
+										? dispatch(
+												createFavoriteThunk({
+													recipeId: details.id,
+													recipeName: details.title,
+												})
+										  )
+										: navigate("/login");
+								}}
+								className="d-flex bi bi-heart pe-2 justify-content-end pr-3"
+							>
+								<div className="pl-2">Likes: {usersThatLikeRecipe.length}</div>
+							</i>
+						)}
+					</div>
+
+					<Collapse accordion>
+						<Panel header="Ingredients" key="ingredients">
+							{details.extendedIngredients?.map((ingredient) => (
+								<li className="list-group-item" key={ingredient.id}>
+									<div>{`${ingredient.name}: ${ingredient.amount} ${ingredient.unit}`}</div>
+									<img
+										src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
+										alt={details.image}
+									/>
+								</li>
 							))}
 						</Panel>
-					) : (
-						<></>
-					)}
-				</Collapse>
+						{/* html parser is vulnerable to XSS attacks :( */}
+						{details.summary ? (
+							<Panel header="Summary" key="summary">
+								<div>{parse(details.summary)}</div>
+							</Panel>
+						) : (
+							<></>
+						)}
+						{details.analyzedInstructions ? (
+							<Panel header="Instructions" key="instructions">
+								{details.analyzedInstructions[0].steps?.map((step) => (
+									<ul>
+										<li className="list-group-item" key={step.number}>
+											<div>{`Step ${step.number}: ${step.step}`}</div>
+										</li>
+									</ul>
+								))}
+							</Panel>
+						) : (
+							<></>
+						)}
+					</Collapse>
+				</Space>
 			</Space>
 			{/* <pre>{JSON.stringify(details, null, 2)}</pre> */}
 		</>
