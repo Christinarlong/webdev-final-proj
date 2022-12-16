@@ -29,7 +29,6 @@ const PublicProfile = () => {
 			<div className="row align-items-start">
 				<div className="col">
 					<h2>Liked Items</h2>
-					{console.log(likedByUser)}
 					<ul>
 						{likedByUser
 							? likedByUser.map((recipe) => (

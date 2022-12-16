@@ -16,3 +16,9 @@ export const getAllPostsForPlan = async (pid) => {
 	const posts = response.data;
 	return posts;
 };
+
+export const updateIngredient = async ({pid, postId, ingredient, owned}) => {
+	const response = await api.put(`${BASE_API_URL}/plans/${pid}/posts/${postId}/ingredients`, { ingredient: ingredient, owned: owned});
+	const posts = response.data;
+	return posts;
+};

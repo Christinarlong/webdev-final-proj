@@ -11,18 +11,37 @@ import {
   FrownOutlined,
 } from "@ant-design/icons";
 import Accordion from "react-bootstrap/Accordion";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateIngredientThunk } from "../posts/posts-thunks";
 import "./plan.css";
 
 const PostCard = ({ post, canEdit = true, vote = undefined }) => {
+  const {planId} = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const checkboxHandler = (e) => { 
+    const ingredient = e.target.value;
+    const owned = post.ingredients[ingredient].owned;
+    dispatch(updateIngredientThunk({pid: planId, postId: post._id, ingredient: ingredient, owned: !owned}));
+  };
+
+  const deleteHandler = () => {};
+
+  const upvoteHandler = () => {};
+
+  const downvoteHandler = () => {};
+
+  const editHandler = () => {};
+
+  console.log(post.user);
 
   return (
     <Card
       hoverable
       size="small"
-      extra={<i class="bi bi-x-lg closeButton"></i>}
+      extra={canEdit ? <i className="bi bi-x-lg closeButton"></i> : <></>}
       style={{ width: 400 }}
       bodyStyle={{ padding: "0" }}
       title={
@@ -49,7 +68,7 @@ const PostCard = ({ post, canEdit = true, vote = undefined }) => {
               <Accordion.Body>
                 { Object.keys(post.ingredients).map(ingredient => 
                 <div>
-                  {canEdit ? <Checkbox checked={post.ingredients[ingredient].owned}>
+                  {canEdit ? <Checkbox checked={post.ingredients[ingredient].owned} value={ingredient} id={ingredient} onClick={checkboxHandler}>
                   {ingredient}, <span className="text-secondary">{post.ingredients[ingredient].amount}</span>
                 </Checkbox> : <Checkbox checked={post.ingredients[ingredient].owned} disabled>
                   {ingredient}, <span>{post.ingredients[ingredient].amount}</span>

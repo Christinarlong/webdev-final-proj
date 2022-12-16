@@ -29,7 +29,6 @@ const PublicProfile = () => {
 	};
 
 	const handleChange = (event, field) => {
-		console.log(event, field);
 		userInfo[field] = event;
 	};
 
@@ -109,7 +108,6 @@ const PublicProfile = () => {
 					<Nav.Link
 						eventKey="posts"
 						onClick={() => {
-							console.log(posts);
 							changeTab("posts");
 						}}
 					>
@@ -135,7 +133,6 @@ const PublicProfile = () => {
 			) : (
 				<div className="row align-items-start">
 					<div className="col">
-						{console.log(userInfo)}
 						<h2>Liked Items</h2>
 						<ul>
 							{likedByUser
