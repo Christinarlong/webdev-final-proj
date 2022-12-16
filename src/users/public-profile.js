@@ -51,7 +51,7 @@ const PublicProfile = () => {
 		const currPlanId = currPlan[0]?._id;
 		const addInfo = {
 			pid: currPlanId,
-			uid: currentUser?._id,
+			uid: publicProfile?._id,
 			role: selectedRole,
 		};
 		dispatch(addUserToPlanThunk(addInfo));
