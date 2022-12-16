@@ -5,7 +5,6 @@ import { getPlanByIdThunk } from "./plans-thunks.js";
 import { getAllPostsForPlanThunk } from "../posts/posts-thunks.js";
 import PlanTimeline from "./plan-timeline.js";
 import PlanUsers from "./plan-users.js";
-import { getAllUsersForPlanThunk } from "../memberships/memberships-thunks.js";
 
 const PlanDetails = () => {
   const { planId } = useParams();
@@ -13,13 +12,11 @@ const PlanDetails = () => {
   const { currentPlan } = useSelector((state) => state.plans);
   const {currentUser} = useSelector((state) => state.users);
   const { postsForPlan } = useSelector((state) => state.posts);
-  const { usersForPlan } = useSelector((state) => state.memberships);
   const [reverse, setReverse] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPlanByIdThunk(planId));
     dispatch(getAllPostsForPlanThunk(planId));
-    dispatch(getAllUsersForPlanThunk(planId));
   }, []);
   return (
     <>
@@ -30,11 +27,9 @@ const PlanDetails = () => {
                 <PlanTimeline posts={postsForPlan}/>
               </div>
               <div className="col-4">
-                <PlanUsers users={usersForPlan}/>
+                <PlanUsers />
               </div>
         </div>
-        
-      <pre>{JSON.stringify(usersForPlan, null, 2)}</pre>
     </>
   );
 };

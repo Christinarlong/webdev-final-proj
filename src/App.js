@@ -5,7 +5,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import Home from "./wecook/home";
 import NavigationSidebar from "./wecook/navigation-sidebar";
 import PublicProfile from "./users/public-profile";
-import Favorites from "./wecook/favorites";
 import MealPlans from "./wecook/meal-plans";
 import { Provider } from "react-redux";
 import spoonacularReducer from "./spoonacular/spoonacular-reducer";
@@ -54,8 +53,9 @@ function App() {
                   <Route index element={<Home />} />
                   <Route path="home" element={<Home />} />
                   <Route path="profile/:uid" element={<PublicProfile />} />
-                  <Route path="myprofile" element={<PrivateProfile />} />
-                  <Route path="favorites" element={<Favorites />} />
+                  <Route path="myprofile" element={<ProtectedRoute>
+                    <PrivateProfile />
+                    </ProtectedRoute>} />
                   <Route
                     path="plans"
                     element={
@@ -64,7 +64,10 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
-                  <Route path="plans/:planId" element={<PlanDetails />} />
+                  <Route path="plans/:planId" element={
+                  <ProtectedRoute>
+                    <PlanDetails />
+                  </ProtectedRoute>} />
                   <Route path="explore" element={<Search />} />
                   <Route
                     path="details/:recipeId"
@@ -75,9 +78,7 @@ function App() {
                   <Route
                     path="/users"
                     element={
-                      <ProtectedRoute>
                         <Users />
-                      </ProtectedRoute>
                     }
                   />
                 </Routes>

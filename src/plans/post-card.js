@@ -15,7 +15,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePostThunk, updateIngredientThunk, voteForPostThunk } from "../posts/posts-thunks";
 import "./plan.css";
-import CurrentUser from "../users/current-user";
 
 const PostCard = ({ post, canEdit = true}) => {
   const {planId} = useParams();
@@ -89,7 +88,7 @@ const PostCard = ({ post, canEdit = true}) => {
               <Accordion.Header>Shopping List</Accordion.Header>
               <Accordion.Body>
                 { Object.keys(post.ingredients).map(ingredient => 
-                <div>
+                <div key={post._id + ingredient}>
                   {canEdit ? <Checkbox key={post._id + ingredient} checked={post.ingredients[ingredient].owned} value={ingredient} id={ingredient} onClick={checkboxHandler}>
                   {ingredient}, <span className="text-secondary">{post.ingredients[ingredient].amount}</span>
                 </Checkbox> : <Checkbox key={post._id + ingredient} checked={post.ingredients[ingredient].owned} disabled>

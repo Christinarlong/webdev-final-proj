@@ -53,3 +53,17 @@ li.guests {
 .downvote:hover {
     color: #eb2f96;
 }
+
+div.timeline_container div.ant-timeline-item-label {
+    width: calc(25% - 12px) !important;
+  }
+  
+  div.timeline_container div.ant-timeline-item-content {
+    left: calc(25% - 4px) !important;
+    width: calc(75% - 4px) !important;
+  }
+  
+  div.timeline_container div.ant-timeline-item-tail,
+  div.ant-timeline-item-head {
+    left: 25% !important;
+  }
