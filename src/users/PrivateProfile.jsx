@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllUsersPostsThunk } from "../posts/posts-thunks.js";
-import { updateUserThunk } from "./users-thunks.js";
+import { profileThunk, updateUserThunk } from "./users-thunks.js";
 import { findAllRecipesLikedByUserThunk } from "../favorites/favorites-thunks.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -11,6 +11,15 @@ import Nav from "react-bootstrap/Nav";
 import PostCard from "../plans/post-card.js";
 import { cloneDeep } from "lodash";
 import Stack from "react-bootstrap/Stack";
+import { Avatar, Image, Carousel, Descriptions } from "antd";
+const contentStyle = {
+	margin: 0,
+	height: "160px",
+	color: "#fff",
+	lineHeight: "160px",
+	textAlign: "center",
+	background: "#364d79",
+};
 
 const PublicProfile = () => {
 	const { currentUser } = useSelector((state) => state.users);
@@ -34,6 +43,18 @@ const PublicProfile = () => {
 		dispatch(updateUserThunk(userInfo));
 	};
 
+	const profileInfo = ["username", "firstName", "lastName", "email"];
+	const profileInfoLabels = {
+		email: "Email",
+		firstName: "First Name",
+		lastName: "Last Name",
+		username: "Username",
+	};
+
+	const onChange = (currentSlide) => {
+		console.log(currentSlide);
+	};
+
 	const handleChange = (event, field) => {
 		userInfo[field] = event;
 	};
@@ -44,15 +65,21 @@ const PublicProfile = () => {
 		email: "Email",
 		firstName: "First Name",
 		lastName: "Last Name",
+		avatar: "Avatar",
+		banner: "Banner",
 	};
 
 	const userInfo = {
 		username: currentUser?.username || "Username",
 		password: currentUser?.password || "Password",
-		email: currentUser?.email || "Email",
-		firstName: currentUser?.firstName || "First Name",
-		lastName: currentUser?.lastName || "Last Name",
+		email: currentUser?.email || "",
+		firstName: currentUser?.firstName || "",
+		lastName: currentUser?.lastName || "",
 	};
+
+	useEffect(() => {
+		dispatch(profileThunk());
+	}, []);
 
 	useEffect(() => {
 		dispatch(findAllRecipesLikedByUserThunk(currentUser?._id));
@@ -66,45 +93,101 @@ const PublicProfile = () => {
 	return (
 		<>
 			<h4>Private Profile</h4>
-			<Modal show={show} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Edit Info</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					{Object.keys(EDITABLE_FIELDS).map((field) => (
-						<Form.Group className="mb-3" controlId={`${field}`}>
-							<Form.Label>{EDITABLE_FIELDS[field]}</Form.Label>
-							<Form.Control
-								onChange={(e) => handleChange(e.target.value, field)}
-								type={field}
-								defaultValue={
-									currentUser
-										? currentUser[field]
-										: `Enter ${EDITABLE_FIELDS[field]}`
-								}
-							/>
-						</Form.Group>
-					))}
-				</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					<Button variant="primary" onClick={handleSave}>
-						Save Changes
-					</Button>
-				</Modal.Footer>
-			</Modal>
-			<button
-				type="button"
-				className="btn btn-primary"
-				onClick={handleShow}
-				data-toggle="modal"
-				data-target="#exampleModal"
-			>
-				Edit Profile
-			</button>
+			{console.log(currentUser)}
+			<div className="position-relative rounded-top">
+				<Carousel afterChange={onChange}>
+					<h3 style={contentStyle}>
+						<img
+							className="img-fluid rounded-top"
+							src={
+								currentUser?.banner ||
+								"https://images5.alphacoders.com/115/1151379.jpg"
+							}
+						></img>
+					</h3>
+				</Carousel>
+			</div>
+
+			<div className="position-absolute overflow-hidden"></div>
+			<Avatar
+				size={{
+					xs: 48,
+					sm: 64,
+					md: 80,
+					lg: 128,
+					xl: 160,
+					xxl: 200,
+				}}
+				icon={
+					<Image
+						src={
+							currentUser?.avatar ||
+							"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+						}
+					></Image>
+				}
+			/>
 			<h1>{currentUser?.username}</h1>
+			<Descriptions
+				title="Basic Infomation"
+				bordered
+				column={{
+					xxl: 4,
+					xl: 3,
+					lg: 3,
+					md: 3,
+					sm: 2,
+					xs: 1,
+				}}
+			>
+				{currentUser &&
+					profileInfo.map((info) => (
+						<Descriptions.Item label={profileInfoLabels[info]}>
+							{currentUser[info] || "N/A"}
+						</Descriptions.Item>
+					))}
+			</Descriptions>
+			<div className="ml-3 mt-3 mb-3">
+				<Modal show={show} onHide={handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Info</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						{Object.keys(EDITABLE_FIELDS).map((field) => (
+							<Form.Group className="mb-3" controlId={`${field}`}>
+								<Form.Label>{EDITABLE_FIELDS[field]}</Form.Label>
+								<Form.Control
+									onChange={(e) => handleChange(e.target.value, field)}
+									type={field}
+									defaultValue={
+										currentUser
+											? currentUser[field]
+											: `Enter ${EDITABLE_FIELDS[field]}`
+									}
+								/>
+							</Form.Group>
+						))}
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleClose}>
+							Close
+						</Button>
+						<Button variant="primary" onClick={handleSave}>
+							Save Changes
+						</Button>
+					</Modal.Footer>
+				</Modal>
+				<button
+					type="button"
+					className="btn btn-primary"
+					onClick={handleShow}
+					data-toggle="modal"
+					data-target="#exampleModal"
+				>
+					Edit Profile
+				</button>
+			</div>
+
 			<Nav fill variant="tabs" defaultActiveKey="liked" className="mb-3">
 				<Nav.Item>
 					<Nav.Link eventKey="liked" onClick={() => changeTab("liked")}>

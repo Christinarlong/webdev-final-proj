@@ -26,67 +26,67 @@ import PlanDetails from "./plans/plan-details";
 import plansReducer from "./plans/plans-reducer";
 
 const store = configureStore({
-  reducer: {
-    spoonacular: spoonacularReducer,
-    users: usersReducer,
-    favorites: favoritesReducer,
-    memberships: membershipsReducer,
-    plans: plansReducer,
+	reducer: {
+		spoonacular: spoonacularReducer,
+		users: usersReducer,
+		favorites: favoritesReducer,
+		memberships: membershipsReducer,
+		plans: plansReducer,
 		posts: postsReducer,
 	},
 });
 
 function App() {
-  return (
-    <div className="container mt-4 mb-4">
-      <Provider store={store}>
-        <BrowserRouter>
-          <CurrentUser>
-            <div className="row mt-2">
-              <div className="col-2 col-md-2 col-lg-2 col-xl-2">
-                <NavigationSidebar active="home" />
-              </div>
-              <div
-                className="col-10 col-md-10 col-lg-10 col-xl-10"
-                style={{ position: "relative" }}
-              >
-                <Routes>
-                  <Route index element={<Home />} />
-                  <Route path="home" element={<Home />} />
-                  <Route path="profile/:uid" element={<PublicProfile />} />
-                  <Route path="myprofile" element={<PrivateProfile />} />
-                  <Route path="favorites" element={<Favorites />} />
-                  <Route
-                    path="plans"
-                    element={
-                      <ProtectedRoute>
-                        <MealPlans />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route path="plans/:planId" element={<PlanDetails />} />
-                  <Route path="explore" element={<Search />} />
-                  <Route
-                    path="details/:recipeId"
-                    element={<SpoonacularDetails />}
-                  />
-                  <Route path="login" element={<Login />} />
-                  <Route path="logout" element={<Logout />} />
-                  <Route
-                    path="/users"
-                    element={
-                      <ProtectedRoute>
-                        <Users />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </div>
-            </div>
-          </CurrentUser>
-        </BrowserRouter>
-      </Provider>
-    </div>
-  );
+	return (
+		<div className="container mt-4 mb-4">
+			<Provider store={store}>
+				<BrowserRouter>
+					<CurrentUser>
+						<div className="row mt-2">
+							<div className="col-2 col-md-2 col-lg-2 col-xl-2">
+								<NavigationSidebar active="home" />
+							</div>
+							<div
+								className="col-10 col-md-10 col-lg-10 col-xl-10"
+								style={{ position: "relative" }}
+							>
+								<Routes>
+									<Route index element={<Home />} />
+									<Route path="home" element={<Home />} />
+									<Route path="profile/:uid" element={<PublicProfile />} />
+									<Route
+										path="myprofile"
+										element={
+											<ProtectedRoute>
+												<PrivateProfile />
+											</ProtectedRoute>
+										}
+									/>
+									<Route path="favorites" element={<Favorites />} />
+									<Route
+										path="plans"
+										element={
+											<ProtectedRoute>
+												<MealPlans />
+											</ProtectedRoute>
+										}
+									/>
+									<Route path="plans/:planId" element={<PlanDetails />} />
+									<Route path="explore" element={<Search />} />
+									<Route
+										path="details/:recipeId"
+										element={<SpoonacularDetails />}
+									/>
+									<Route path="login" element={<Login />} />
+									<Route path="logout" element={<Logout />} />
+									<Route path="/users" element={<Users />} />
+								</Routes>
+							</div>
+						</div>
+					</CurrentUser>
+				</BrowserRouter>
+			</Provider>
+		</div>
+	);
 }
 export default App;

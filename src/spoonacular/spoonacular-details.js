@@ -116,8 +116,38 @@ const SpoonacularDetails = () => {
 	return (
 		<>
 			<Space gap={3}>
-				<Space direction="vertical" size="middle">
-					<h1>{details.title}</h1>
+				<Space gap={3} direction="vertical" size="middle">
+					<div>
+						<h1>{details.title}</h1>
+						<div className="pb-3">
+							{currentUser && usersThatLikeRecipe.includes(currentUser._id) ? (
+								<i
+									onClick={() => dispatch(deleteFavoriteThunk(details.id))}
+									className="position-absolute bi bi-heart-fill pe-2 text-danger"
+								>
+									Likes: {usersThatLikeRecipe.length}
+								</i>
+							) : (
+								<i
+									onClick={() => {
+										currentUser
+											? dispatch(
+													createFavoriteThunk({
+														recipeId: details.id,
+														recipeName: details.title,
+													})
+											  )
+											: navigate("/login");
+									}}
+									className="position-absolute bi bi-heart pe-2"
+								>
+									<div className="pl-2">
+										Likes: {usersThatLikeRecipe.length}
+									</div>
+								</i>
+							)}
+						</div>
+					</div>
 
 					{currentUser ? (
 						<Button type="primary" onClick={showModal}>
@@ -154,57 +184,68 @@ const SpoonacularDetails = () => {
 							/>
 						</Space>
 					</Modal>
-
-					<div className="row">
-						<div className="col">
-							<ul className="list-group">
-								<li className="list-group-item">
-									Servings: {details.servings}
-								</li>
-								<li className="list-group-item">
-									Ready in minutes: {details.readyInMinutes}
-								</li>
-								<li className="list-group-item">
-									<a href={details.sourceUrl}>Link to instructions</a>
-								</li>
-							</ul>
+					<Space gap={3} direction="vertical" size="middle">
+						<div className="row">
+							<div className="col">
+								<ul className="list-group">
+									<li className="list-group-item">
+										Servings: {details.servings}
+									</li>
+									<li className="list-group-item">
+										Ready in minutes: {details.readyInMinutes}
+									</li>
+									<li className="list-group-item">
+										<a href={details.sourceUrl}>Link to instructions</a>
+									</li>
+								</ul>
+							</div>
+							<div className="col m-3">
+								<img
+									src={`https://spoonacular.com/recipeImages/${recipeId}-636x393.jpg`}
+									alt={details.image}
+								/>
+							</div>
 						</div>
-						<div className="col m-3">
-							<img
-								src={`https://spoonacular.com/recipeImages/${recipeId}-636x393.jpg`}
-								alt={details.image}
-							/>
-						</div>
-					</div>
 
-					<div className="row d-flex justify-content-end">
-						{currentUser && usersThatLikeRecipe.includes(currentUser._id) ? (
-							<i
-								onClick={() => dispatch(deleteFavoriteThunk(details.id))}
-								className="d-flex bi bi-heart-fill pe-2 text-danger justify-content-end pr-3"
-							>
-								Likes: {usersThatLikeRecipe.length}
-							</i>
-						) : (
-							<i
-								onClick={() => {
-									currentUser
-										? dispatch(
-												createFavoriteThunk({
-													recipeId: details.id,
-													recipeName: details.title,
-												})
-										  )
-										: navigate("/login");
-								}}
-								className="d-flex bi bi-heart pe-2 justify-content-end pr-3"
-							>
-								<div className="pl-2">Likes: {usersThatLikeRecipe.length}</div>
-							</i>
-						)}
-					</div>
+						{/* <div className="row d-flex justify-content-end">
+							{currentUser && usersThatLikeRecipe.includes(currentUser._id) ? (
+								<i
+									onClick={() => dispatch(deleteFavoriteThunk(details.id))}
+									className="d-flex bi bi-heart-fill pe-2 text-danger justify-content-end pr-3"
+								>
+									Likes: {usersThatLikeRecipe.length}
+								</i>
+							) : (
+								<i
+									onClick={() => {
+										currentUser
+											? dispatch(
+													createFavoriteThunk({
+														recipeId: details.id,
+														recipeName: details.title,
+													})
+											  )
+											: navigate("/login");
+									}}
+									className="d-flex bi bi-heart pe-2 justify-content-end pr-3"
+								>
+									<div className="pl-2">
+										Likes: {usersThatLikeRecipe.length}
+									</div>
+								</i>
+							)}
+						</div> */}
+					</Space>
 
 					<Collapse accordion>
+						{/* html parser is vulnerable to XSS attacks :( */}
+						{details.summary ? (
+							<Panel header="Summary" key="summary">
+								<div>{parse(details.summary)}</div>
+							</Panel>
+						) : (
+							<></>
+						)}
 						<Panel header="Ingredients" key="ingredients">
 							{details.extendedIngredients?.map((ingredient) => (
 								<li className="list-group-item" key={ingredient.id}>
@@ -216,14 +257,6 @@ const SpoonacularDetails = () => {
 								</li>
 							))}
 						</Panel>
-						{/* html parser is vulnerable to XSS attacks :( */}
-						{details.summary ? (
-							<Panel header="Summary" key="summary">
-								<div>{parse(details.summary)}</div>
-							</Panel>
-						) : (
-							<></>
-						)}
 						{details.analyzedInstructions ? (
 							<Panel header="Instructions" key="instructions">
 								{details.analyzedInstructions[0].steps?.map((step) => (

@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { NavLink } from "react-router-dom";
 
 const NavigationSidebar = () => {
 	const { pathname } = useLocation();
+	const { currentUser } = useSelector((state) => state.users);
+	const [loginRegisterLogout, updateDynamicPath] = useState("/login");
 	const active = pathname.split("/")[1];
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!currentUser) {
+			updateDynamicPath("/login");
+		} else {
+			updateDynamicPath("/logout");
+		}
+	}, [currentUser]);
+
 	return (
 		<div className="list-group">
 			<NavLink
@@ -42,18 +55,10 @@ const NavigationSidebar = () => {
 			<NavLink
 				className={`list-group-item
                     ${active === "login" ? "active" : ""}`}
-				to="/login"
+				to={loginRegisterLogout}
 			>
 				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-lg-inline">Login</span>
-			</NavLink>
-			<NavLink
-				className={`list-group-item
-                    ${active === "logout" ? "active" : ""}`}
-				to="/logout"
-			>
-				<i className="bi bi-person pe-2"></i>
-				<span className="d-none d-lg-inline">Logout</span>
+				<span className="d-none d-lg-inline">Login/Logout</span>
 			</NavLink>
 			<NavLink
 				className={`list-group-item
