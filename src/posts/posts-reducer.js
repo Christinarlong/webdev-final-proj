@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-<<<<<<< HEAD
-import { getAllUsersPostsThunk, getAllPostsForPlanThunk, updateIngredientThunk } from "./posts-thunks.js";
-=======
-import { getAllUsersPostsThunk, createPostThunk } from "./posts-thunks.js";
->>>>>>> 6d36fc87b769dfcb8e7b1c083de16f34295ac926
+import { getAllUsersPostsThunk, getAllPostsForPlanThunk, updateIngredientThunk, createPostThunk } from "./posts-thunks.js";
 
 const postsReducer = createSlice({
 	name: "posts",
