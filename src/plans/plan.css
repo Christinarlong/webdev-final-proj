@@ -37,11 +37,19 @@ li.guests {
     color: #9f9f9f;
 }
 
-.recipeLink {
+.link {
     text-decoration: none;
     color: black;
 }
 
-.recipeLink:hover {
+.link:hover {
     color: #0d6efd;
+}
+
+.upvote:hover {
+    color: #52c41a;
+}
+
+.downvote:hover {
+    color: #eb2f96;
 }

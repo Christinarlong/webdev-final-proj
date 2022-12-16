@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getRecipeDetailsByIdThunk } from "./spoonacular-thunks"
 import { createFavoriteThunk, deleteFavoriteThunk, findUsersThatLikeRecipeThunk } from "../favorites/favorites-thunks";
 import parse from 'html-react-parser';
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SpoonacularDetails = () => {
   const { recipeId } = useParams();
@@ -14,6 +14,7 @@ const SpoonacularDetails = () => {
   const {currentUser} = useSelector((state) => state.users)
   const { usersThatLikeRecipe } = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getRecipeDetailsByIdThunk(recipeId));
     dispatch(findUsersThatLikeRecipeThunk(recipeId));
@@ -57,7 +58,7 @@ const SpoonacularDetails = () => {
                     currentUser ? 
                     dispatch(
                       createFavoriteThunk({recipeId: details.id, recipeName: details.title})
-                    ) :  redirect("/login")
+                    ) :  navigate("/login")
                   }
                   }
                   className="float-end bi bi-heart pe-2"
