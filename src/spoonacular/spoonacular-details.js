@@ -273,7 +273,6 @@ const SpoonacularDetails = () => {
 					</Collapse>
 				</Space>
 			</Space>
-			{/* <pre>{JSON.stringify(details, null, 2)}</pre> */}
 		</>
 	);
 };

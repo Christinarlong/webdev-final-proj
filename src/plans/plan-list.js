@@ -72,7 +72,6 @@ const PlanList = () => {
             </li>
           ))}
           </ul>}
-      <pre>{JSON.stringify(plansForUser, null, 2)}</pre>
     </>
   );
 };
