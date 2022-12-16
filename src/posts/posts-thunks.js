@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllUsersPosts, getAllPostsForPlan, updateIngredient } from "./posts-service";
+import { getAllUsersPosts, getAllPostsForPlan, updateIngredient, createPost } from "./posts-service";
 
 export const getAllUsersPostsThunk = createAsyncThunk(
 	"getAllUsersPosts",
@@ -10,8 +10,11 @@ export const getAllPostsForPlanThunk = createAsyncThunk(
 	"getAllPostsForPlan",
 	async (pid) => await getAllPostsForPlan(pid)
 );
-
 export const updateIngredientThunk = createAsyncThunk(
 	"updateIngredient",
 	async (info) => await updateIngredient(info)
+);
+export const createPostThunk = createAsyncThunk(
+	"createPost",
+	async (post) => await createPost(post)
 );

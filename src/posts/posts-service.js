@@ -11,6 +11,15 @@ export const getAllUsersPosts = async (uid) => {
 	return user;
 };
 
+export const createPost = async (post) => {
+	const response = await api.post(
+		`${BASE_API_URL}/plans/${post.planId}/posts`,
+		post.body
+	);
+
+	const postResponse = response.data;
+	return postResponse;
+};
 export const getAllPostsForPlan = async (pid) => {
 	const response = await api.get(`${BASE_API_URL}/plans/${pid}/posts`);
 	const posts = response.data;
