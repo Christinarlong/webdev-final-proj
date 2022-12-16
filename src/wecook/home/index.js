@@ -34,14 +34,23 @@ const Home = () => {
       <Spatula className="spatula" />
     </div>
     <div className="slide slide2 d-flex align-items-center justify-content-center flex-column">
+      <h1 className="slideHeader">Creating a meal plan is easy!</h1>
+      <h4 className="slideBody">With an account, you can create a plan in the Meal Plans tab. Search for recipes, and add ones you like to your meal plan.</h4>
+    </div>
+    <div className="slide slide3 d-flex align-items-center justify-content-center flex-column">
     <h1 className="slideHeader">Thousands of recipes!</h1>
     <h4 className="slideBody">Powered by Spoonacular API.</h4>
     <h4 className="slideBody"><Button onClick={() => navigate("/explore")}>Start searching</Button></h4>
     </div>
-    {currentUser ? <div className="slide slide3 d-flex align-items-center justify-content-center flex-column">
+    <div className="slide slide1 d-flex align-items-center justify-content-center flex-column">
+      <h1 className="slideHeader">Invite your friends to a meal plan</h1>
+      <h4 className="slideBody">Guests can view and like posts. Planners can add posts. Owners can add people.</h4>
+      <Spatula className="spatula" />
+    </div>
+    {currentUser ? <div className="slide slide2 d-flex align-items-center justify-content-center flex-column">
       <h1 className="slideHeader">Thanks for signing up!</h1>
       <h4 className="slideBody">Invite your friends to WeCook too!</h4>
-    </div> : <div className="slide slide3 d-flex align-items-center justify-content-center flex-column">
+    </div> : <div className="slide slide2 d-flex align-items-center justify-content-center flex-column">
       <h1 className="slideHeader">Sign up today!</h1>
       <h4 className="slideBody">Make a WeCook account for free.</h4>
       <h4 className="slideBody"><Button onClick={() => navigate("/login")}>Register</Button></h4>
