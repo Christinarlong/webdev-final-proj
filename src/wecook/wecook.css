@@ -24,7 +24,7 @@
 
 .header {
     background-color: rgb(253, 238, 217);
-    padding-left: 10%;
+    padding-left: 50%;
     padding-top: 6px;
     padding-bottom: 6px;
 }
@@ -43,4 +43,26 @@
     border-radius: 25px; 
     background-color: white;
     position: relative;
+}
+
+.slide {
+    height: 245px;
+    color: #fff;
+    line-height: 160px;
+    text-align: center;
+    background: #ffaa43;
+    border-radius: 5px;
+    padding: 50px;
+  };
+.slide1 {
+    background: #ffaa43;
+}
+.slide2 {
+    background: #6acc56;
+}
+.slide3 {
+    background: #493040;
+}
+.slideBody {
+    padding: 2px;
 }
