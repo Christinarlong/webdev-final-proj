@@ -30,3 +30,18 @@ li.guests {
 .edit-button:hover {
     color: #0d6efd; /* bootstrap primary color */
 }
+
+.readyInMinutes {
+    padding-left: 4px;
+    font-weight: 400;
+    color: #9f9f9f;
+}
+
+.recipeLink {
+    text-decoration: none;
+    color: black;
+}
+
+.recipeLink:hover {
+    color: #0d6efd;
+}
