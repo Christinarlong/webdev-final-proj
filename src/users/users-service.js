@@ -41,7 +41,11 @@ export const findAllRecipesLikedByUser = async (uid) => {
 	return response.data;
 };
 
+export const updateUser = async (user) => {
+	const response = await api.put(`${BASE_API_URL}/users/${user.uid}`, user);
+	return response.data;
+};
+
 // TODO: delete these?
 const createUser = (user) => {};
 const deleteUser = () => {};
-const updateUser = () => {};
