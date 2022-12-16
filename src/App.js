@@ -23,6 +23,7 @@ import membershipsReducer from "./memberships/memberships-reducer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PlanDetails from "./plans/plan-details";
 import plansReducer from "./plans/plans-reducer";
+import Header from "./wecook/header";
 
 const store = configureStore({
 	reducer: {
@@ -37,6 +38,8 @@ const store = configureStore({
 
 function App() {
 	return (
+    <div>
+    <Header />
 		<div className="container mt-4 mb-4">
 			<Provider store={store}>
 				<BrowserRouter>
@@ -85,6 +88,7 @@ function App() {
 				</BrowserRouter>
 			</Provider>
 		</div>
+    </div>
 	);
 }
 export default App;

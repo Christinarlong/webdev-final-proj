@@ -6,8 +6,8 @@ import { Space } from "antd";
 
 const Login = () => {
 	const { currentUser } = useSelector((state) => state.users);
-	const [username, setUsername] = useState("bulbasaur");
-	const [password, setPassword] = useState("12345");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
 	const dispatch = useDispatch();
 	const handleLoginBtn = () => {
 		try {

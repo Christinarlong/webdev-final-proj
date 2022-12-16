@@ -24,3 +24,8 @@ export const findUsersThatLikeRecipe = async (rid) => {
 	const response = await api.get(`${BASE_API_URL}/recipes/${rid}/likes`);
 	return response.data;
 };
+
+export const findAllFavorites = async () => {
+	const response = await api.get(`${BASE_API_URL}/likes`);
+	return response.data;
+}

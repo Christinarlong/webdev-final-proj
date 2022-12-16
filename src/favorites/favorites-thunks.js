@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { deleteFavorite, createFavorite, findAllRecipesLikedByUser, findUsersThatLikeRecipe } from "./favorites-service";
+import { deleteFavorite, createFavorite, findAllRecipesLikedByUser, findUsersThatLikeRecipe, findAllFavorites } from "./favorites-service";
 
 export const deleteFavoriteThunk = createAsyncThunk(
     'deleteFavorite',
@@ -19,4 +19,9 @@ export const findAllRecipesLikedByUserThunk = createAsyncThunk(
 export const findUsersThatLikeRecipeThunk = createAsyncThunk(
     "findUsersThatLikeRecipe",
     async (rid) => await findUsersThatLikeRecipe(rid)
+);
+
+export const findAllFavoritesThunk = createAsyncThunk(
+    "findAllFavorites",
+    async (rid) => await findAllFavorites(rid)
 );

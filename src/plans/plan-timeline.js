@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import './plan.css';
 import PostCard from './post-card';
 
-const PlanTimeline = ({posts, reverse = false}) => {
+const PlanTimeline = ({posts, canEdit = false, reverse = false}) => {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -24,19 +24,19 @@ const PlanTimeline = ({posts, reverse = false}) => {
                     key={post._id}
                     label={postDate.toLocaleString()}
                     dot={<CheckCircleTwoTone twoToneColor="#52c41a"/>}
-                ><PostCard post={post} /></Timeline.Item>);
+                ><PostCard post={post} canEdit={canEdit} /></Timeline.Item>);
             } else if (postDate <= tomorrow) {
                 return (<Timeline.Item 
                     key={post._id}
                     label={postDate.toLocaleString()}
                     dot={<ClockCircleTwoTone />}
-                ><PostCard post={post} /></Timeline.Item>);
+                ><PostCard post={post} canEdit={canEdit} /></Timeline.Item>);
             } else {
                 return (<Timeline.Item 
                     key={post._id}
                     label={postDate.toLocaleString()}
                     color="gray"
-                ><PostCard post={post} /></Timeline.Item>);
+                ><PostCard post={post} canEdit={canEdit} /></Timeline.Item>);
             }
             })}
       </Timeline>
