@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUsersPostsThunk, getAllPostsForPlanThunk, updateIngredientThunk, createPostThunk, deletePostThunk } from "./posts-thunks.js";
+import { getAllUsersPostsThunk, getAllPostsForPlanThunk, updateIngredientThunk, createPostThunk, deletePostThunk, voteForPostThunk } from "./posts-thunks.js";
 
 const postsReducer = createSlice({
 	name: "posts",
@@ -34,6 +34,14 @@ const postsReducer = createSlice({
 			const index = state.postsForPlan.findIndex(post => post._id === action.payload._id)
         if (index > -1) {
             state.postsForPlan.splice(index, 1);
+        }
+		},
+		[voteForPostThunk.fulfilled]: (state, action) => {
+			const index = state.postsForPlan.findIndex(post => post._id === action.payload._id)
+        if (index > -1) {
+			const copy = [...state.postsForPlan];
+            copy[index] = action.payload;
+			state.postsForPlan = copy;
         }
 		},
 	},

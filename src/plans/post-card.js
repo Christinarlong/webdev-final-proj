@@ -12,14 +12,16 @@ import {
 } from "@ant-design/icons";
 import Accordion from "react-bootstrap/Accordion";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deletePostThunk, updateIngredientThunk } from "../posts/posts-thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePostThunk, updateIngredientThunk, voteForPostThunk } from "../posts/posts-thunks";
 import "./plan.css";
+import CurrentUser from "../users/current-user";
 
-const PostCard = ({ post, canEdit = true, vote = undefined }) => {
+const PostCard = ({ post, canEdit = true}) => {
   const {planId} = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {currentUser} = useSelector((state) => state.users)
 
   const checkboxHandler = (e) => { 
     const ingredient = e.target.value;
@@ -31,13 +33,31 @@ const PostCard = ({ post, canEdit = true, vote = undefined }) => {
     dispatch(deletePostThunk({planId: planId, postId: post._id}));
   };
 
-  const upvoteHandler = () => {};
+  const upvoteHandler = () => {
+    dispatch(voteForPostThunk({planId: planId, postId: post._id, vote: 'upvoted'}));
+  };
 
-  const downvoteHandler = () => {};
+  const downvoteHandler = () => {
+    dispatch(voteForPostThunk({planId: planId, postId: post._id, vote: 'downvoted'}));
+  };
+
+  const removeVoteHandler = () => {
+    dispatch(voteForPostThunk({planId: planId, postId: post._id, vote: 'removed'}));
+  };
 
   const editHandler = () => {};
 
-  console.log(post.user);
+
+  let upvotes = 0;
+  let downvotes = 0;
+  Object.keys(post.votes).forEach((userId) => {
+    if (post.votes[userId]) {
+      upvotes += 1;
+    } else {
+      downvotes += 1;
+    }
+  });
+  let vote = post.votes[currentUser._id];
 
   return (
     <Card
@@ -91,12 +111,12 @@ const PostCard = ({ post, canEdit = true, vote = undefined }) => {
             </span>
             <span className="d-flex align-items-center">
               <span className="d-flex align-items-center p-1">
-                {vote === 'upvoted' ? <SmileTwoTone twoToneColor="#52c41a" className="p-1" /> : <SmileOutlined className="upvote p-1" />}
-                37
+                {vote === true ? <SmileTwoTone twoToneColor="#52c41a" className="p-1" onClick={removeVoteHandler}/> : <SmileOutlined className="upvote p-1" onClick={upvoteHandler}/>}
+                {upvotes}
               </span>
               <span className="d-flex align-items-center p-1">
-                {vote === 'downvoted' ? <FrownTwoTone twoToneColor="#eb2f96" className="p-1" /> : <FrownOutlined className="downvote p-1" />}
-                49
+                {vote === false ? <FrownTwoTone twoToneColor="#eb2f96" className="p-1" onClick={removeVoteHandler}/> : <FrownOutlined className="downvote p-1" onClick={downvoteHandler}/>}
+                {downvotes}
               </span>
               {canEdit ? <i className="bi bi-pencil edit-button p-2"></i> : <></>}
             </span>

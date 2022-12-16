@@ -37,3 +37,9 @@ export const deletePost = async ({pid, postId}) => {
 	const deletedPost = response.data;
 	return deletedPost;
 };
+
+export const voteForPost = async ({pid, postId, vote}) => {
+	const response = await api.put(`${BASE_API_URL}/plans/${pid}/posts/${postId}/votes`, { vote: vote});
+	const updatedPost = response.data;
+	return updatedPost;
+};
