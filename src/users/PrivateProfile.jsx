@@ -1,13 +1,14 @@
 import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { findAllRecipesLikedByUserThunk } from "./users-thunks.js";
+import { findAllRecipesLikedByUserThunk } from "../favorites/favorites-thunks.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 // import Modal from "./Modal.jsx";
 
 const PublicProfile = () => {
-	const { currentUser, likedByUser } = useSelector((state) => state.users);
+	const { currentUser } = useSelector((state) => state.users);
+	const { likedByUser } = useSelector((state) => state.favorites);
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);

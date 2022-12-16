@@ -6,7 +6,6 @@ import {
 	logoutThunk,
 	profileThunk,
 	registerThunk,
-	findAllRecipesLikedByUserThunk,
 } from "./users-thunks.js";
 
 const usersReducer = createSlice({
@@ -36,10 +35,6 @@ const usersReducer = createSlice({
 		},
 		[findAllUsersThunk.fulfilled]: (state, action) => {
 			state.users = action.payload;
-			state.loading = false;
-		},
-		[findAllRecipesLikedByUserThunk.fulfilled]: (state, action) => {
-			state.likedByUser = action.payload;
 			state.loading = false;
 		},
 	},

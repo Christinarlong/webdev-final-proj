@@ -32,12 +32,7 @@ export const profile = async () => {
 };
 
 export const findAllUsers = async () => {
-	const response = await axios.get(`${BASE_API_URL}/users`);
-	return response.data;
-};
-
-export const findAllRecipesLikedByUser = async (uid) => {
-	const response = await api.get(`${BASE_API_URL}/users/${uid}/likes`);
+	const response = await api.get(`${BASE_API_URL}/users`);
 	return response.data;
 };
 

@@ -19,11 +19,13 @@ import Users from "./users";
 import Logout from "./users/logout";
 import usersReducer from "./users/users-reducer";
 import PrivateProfile from "./users/PrivateProfile";
+import favoritesReducer from "./favorites/favorites-reducer";
 
 const store = configureStore({
 	reducer: {
 		spoonacular: spoonacularReducer,
 		users: usersReducer,
+    favorites: favoritesReducer
 	},
 });
 

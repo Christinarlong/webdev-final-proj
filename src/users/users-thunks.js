@@ -7,7 +7,6 @@ import {
 	logout,
 	profile,
 	register,
-	findAllRecipesLikedByUser,
 } from "./users-service";
 
 export const logoutThunk = createAsyncThunk(
@@ -38,11 +37,6 @@ export const registerThunk = createAsyncThunk(
 export const findAllUsersThunk = createAsyncThunk(
 	"findAllUsers",
 	async () => await findAllUsers()
-);
-
-export const findAllRecipesLikedByUserThunk = createAsyncThunk(
-	"findAllRecipesLikedByUser",
-	async (uid) => await findAllRecipesLikedByUser(uid)
 );
 
 /*export const createUserThunk = createAsyncThunk(
