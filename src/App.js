@@ -20,12 +20,15 @@ import Logout from "./users/logout";
 import usersReducer from "./users/users-reducer";
 import PrivateProfile from "./users/PrivateProfile";
 import favoritesReducer from "./favorites/favorites-reducer";
+import membershipsReducer from "./memberships/memberships-reducer";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore({
 	reducer: {
 		spoonacular: spoonacularReducer,
 		users: usersReducer,
-    favorites: favoritesReducer
+    favorites: favoritesReducer,
+    memberships: membershipsReducer
 	},
 });
 
