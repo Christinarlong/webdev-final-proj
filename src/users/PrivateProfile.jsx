@@ -2,10 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllUsersPostsThunk } from "../posts/posts-thunks.js";
-import {
-	findAllRecipesLikedByUserThunk,
-	updateUserThunk,
-} from "./users-thunks.js";
+import { updateUserThunk } from "./users-thunks.js";
 import { findAllRecipesLikedByUserThunk } from "../favorites/favorites-thunks.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -54,9 +51,11 @@ const PublicProfile = () => {
 
 	useEffect(() => {
 		dispatch(findAllRecipesLikedByUserThunk(currentUser?._id));
-		dispatch(getAllUsersPostsThunk(currentUser?._id));
-		console.log(posts);
 	}, []);
+
+	useEffect(() => {
+		dispatch(getAllUsersPostsThunk(currentUser?._id));
+	}, [currentTab]);
 
 	return (
 		<>
@@ -107,7 +106,13 @@ const PublicProfile = () => {
 					</Nav.Link>
 				</Nav.Item>
 				<Nav.Item>
-					<Nav.Link eventKey="posts" onClick={(e) => changeTab("posts")}>
+					<Nav.Link
+						eventKey="posts"
+						onClick={() => {
+							console.log(posts);
+							changeTab("posts");
+						}}
+					>
 						Posts
 					</Nav.Link>
 				</Nav.Item>
