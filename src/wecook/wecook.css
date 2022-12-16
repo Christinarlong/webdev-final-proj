@@ -1,0 +1,46 @@
+.rotateimg180 {
+    -webkit-transform:rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+
+.wecook {
+    font-size: xx-large;
+    font-weight: 600;
+}
+
+.logo {
+    height: 35px;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+
+.spatula {
+    height: 80px;
+}
+
+.header {
+    background-color: rgb(253, 238, 217);
+    padding-left: 10%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.we {}
+
+.cook {
+    color: rgb(255, 149, 0);
+}
+
+#circle {
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px; 
+    background-color: white;
+    position: relative;
+}
