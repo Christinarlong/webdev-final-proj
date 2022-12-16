@@ -20,16 +20,19 @@ const PlanTimeline = ({posts, reverse = false}) => {
             const postDate = new Date(post.date);
             if (postDate <= today) {
                 return (<Timeline.Item 
+                    key={post._id}
                     label={postDate.toLocaleString()}
                     dot={<CheckCircleTwoTone twoToneColor="#52c41a"/>}
                 ><PostCard post={post} /></Timeline.Item>);
             } else if (postDate <= tomorrow) {
                 return (<Timeline.Item 
+                    key={post._id}
                     label={postDate.toLocaleString()}
                     dot={<ClockCircleTwoTone />}
                 ><PostCard post={post} /></Timeline.Item>);
             } else {
                 return (<Timeline.Item 
+                    key={post._id}
                     label={postDate.toLocaleString()}
                     color="gray"
                 ><PostCard post={post} /></Timeline.Item>);
