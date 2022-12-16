@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { getAllUsersForPlanThunk, removeUserFromPlanThunk, updateUserForPlanThunk } from "../memberships/memberships-thunks.js";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Image, Dropdown, Button } from "antd";
@@ -10,6 +10,7 @@ const PlanUsers = ({isOwner = true}) => {
   const {currentUser} = useSelector((state) => state.users)
   const { usersForPlan } = useSelector((state) => state.memberships);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {planId} = useParams();
   useEffect(() => {
     dispatch(getAllUsersForPlanThunk(planId));
@@ -37,6 +38,9 @@ const PlanUsers = ({isOwner = true}) => {
 const changeRole = ({key, userId}) => {
     if (key === 'remove') {
         dispatch(removeUserFromPlanThunk({pid: planId, uid: userId}))
+        if (userId === currentUser._id) {
+            navigate("/plans");
+        }
     } else {
         dispatch(updateUserForPlanThunk({pid: planId, uid: userId, role: key}));
     }
