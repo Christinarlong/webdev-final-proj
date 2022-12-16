@@ -8,6 +8,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
+import PostCard from "../plans/post-card.js";
+import { cloneDeep } from "lodash";
+import Stack from "react-bootstrap/Stack";
 
 const PublicProfile = () => {
 	const { currentUser } = useSelector((state) => state.users);
@@ -16,6 +19,9 @@ const PublicProfile = () => {
 	const [show, setShow] = useState(false);
 	const [currentTab, changeTab] = useState("");
 	const dispatch = useDispatch();
+	const today = new Date();
+	const tomorrow = new Date(today);
+	tomorrow.setDate(tomorrow.getDate() + 1);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -54,6 +60,7 @@ const PublicProfile = () => {
 
 	useEffect(() => {
 		dispatch(getAllUsersPostsThunk(currentUser?._id));
+		console.log(posts);
 	}, [currentTab]);
 
 	return (
@@ -98,7 +105,7 @@ const PublicProfile = () => {
 				Edit Profile
 			</button>
 			<h1>{currentUser?.username}</h1>
-			<Nav fill variant="tabs" defaultActiveKey="liked">
+			<Nav fill variant="tabs" defaultActiveKey="liked" className="mb-3">
 				<Nav.Item>
 					<Nav.Link eventKey="liked" onClick={() => changeTab("liked")}>
 						Liked Items
@@ -116,19 +123,43 @@ const PublicProfile = () => {
 				</Nav.Item>
 			</Nav>
 			{currentTab === "posts" ? (
-				<div className="row align-items-start">
-					<div className="col">
-						<ul>
-							{posts &&
-								posts.map((post) => (
-									<li key={post._id} className="list-group-item">
-										<img src={post.img} height={50} alt={post.img} />
-										<Link to={`/plan/${post.plan._id}`}>{post.recipeName}</Link>
-										<span>Created on: {new Date(post.dateCreated).toLocaleString()}</span>
-									</li>
-								))}
-						</ul>
-					</div>
+				<div className="col">
+					{posts ? (
+						<Stack gap={3}>
+							{posts?.map((post) => {
+								const newPost = cloneDeep(post);
+								console.log(newPost);
+
+								newPost["user"] = {
+									username: currentUser?.username,
+									_id: currentUser?._id,
+									avatar: "",
+								};
+								const postDate = new Date(newPost.date);
+								if (postDate <= today) {
+									return (
+										<div className="me-2">
+											<PostCard post={newPost} className="profile-card" />
+										</div>
+									);
+								} else if (postDate <= tomorrow) {
+									return (
+										<div className="me-2">
+											<PostCard post={newPost} className="profile-card" />
+										</div>
+									);
+								} else {
+									return (
+										<div className="me-2">
+											<PostCard post={newPost} className="profile-card" />
+										</div>
+									);
+								}
+							})}
+						</Stack>
+					) : (
+						""
+					)}
 				</div>
 			) : (
 				<div className="row align-items-start">
