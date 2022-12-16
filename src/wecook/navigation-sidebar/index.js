@@ -57,7 +57,7 @@ const NavigationSidebar = () => {
                     ${active === "login" ? "active" : ""}`}
 				to={loginRegisterLogout}
 			>
-				<i className="bi bi-person pe-2"></i>
+				<i className="bi bi-box-arrow-in-right pe-2"></i>
 				<span className="d-none d-lg-inline">{currentUser ? "Logout" : "Login"}</span>
 			</NavLink>
 			<NavLink
@@ -65,7 +65,7 @@ const NavigationSidebar = () => {
                     ${active === "profile" ? "active" : ""}`}
 				to="/users"
 			>
-				<i className="bi bi-person pe-2"></i>
+				<i className="bi bi-people pe-2"></i>
 				<span className="d-none d-lg-inline">Users</span>
 			</NavLink>
 		</div>

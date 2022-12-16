@@ -23,9 +23,9 @@ const PlanDetails = () => {
     dispatch(getAllPostsForPlanThunk(planId));
     dispatch(getAllUsersForPlanThunk(planId));
   }, []);
-  let isOwner = usersForPlan ? usersForPlan.owners.findIndex(user => user._id === currentUser._id) > -1 : false;
-  let isPlanner = usersForPlan ? usersForPlan.planners.findIndex(user => user._id === currentUser._id) > -1 : false;
-  let isGuest = usersForPlan ? usersForPlan.guests.findIndex(user => user._id === currentUser._id) > -1 : false;
+  let isOwner = usersForPlan ? usersForPlan.owners?.findIndex(user => user._id === currentUser._id) > -1 : false;
+  let isPlanner = usersForPlan ? usersForPlan.planners?.findIndex(user => user._id === currentUser._id) > -1 : false;
+  let isGuest = usersForPlan ? usersForPlan.guests?.findIndex(user => user._id === currentUser._id) > -1 : false;
   return (
     <>{(currentPlan && (isOwner || isPlanner || isGuest)) ? 
       <>
