@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllUsersPostsThunk } from "../posts/posts-thunks.js";
 import {
-	findAllRecipesLikedByUserThunk,
 	updateUserThunk,
 } from "./users-thunks.js";
 import { findAllRecipesLikedByUserThunk } from "../favorites/favorites-thunks.js";

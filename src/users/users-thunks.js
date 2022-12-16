@@ -41,11 +41,6 @@ export const findAllUsersThunk = createAsyncThunk(
 	async () => await findAllUsers()
 );
 
-export const findAllRecipesLikedByUserThunk = createAsyncThunk(
-	"findAllRecipesLikedByUser",
-	async (uid) => await findAllRecipesLikedByUser(uid)
-);
-
 export const updateUserThunk = createAsyncThunk(
 	"updateUser",
 	async (user) => await updateUser(user)
