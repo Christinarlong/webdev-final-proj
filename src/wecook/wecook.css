@@ -20,6 +20,7 @@
 
 .spatula {
     height: 80px;
+    color: #493040;
 }
 
 .header {
@@ -29,7 +30,9 @@
     padding-bottom: 6px;
 }
 
-.we {}
+.we {
+    color: #493040;
+}
 
 .cook {
     color: rgb(255, 149, 0);
@@ -65,4 +68,13 @@
 }
 .slideBody {
     padding: 2px;
+}
+
+.link {
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.link:hover {
+    color: #2f82ff;
 }

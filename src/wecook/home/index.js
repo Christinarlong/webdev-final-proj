@@ -1,11 +1,21 @@
-import React from "react";
-import { Carousel } from 'antd';
+import React, { useEffect } from "react";
+import { Avatar, Carousel, Image } from 'antd';
 import { Button } from "react-bootstrap";
 import { ReactComponent as Spatula } from './spatula.svg'
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { findAllFavoritesThunk } from "../../favorites/favorites-thunks";
+import { UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { allFavorites } = useSelector(state => state.favorites);
+
+  useEffect(() => {
+		dispatch(findAllFavoritesThunk());
+	}, []);
 
   return (
     <>
@@ -26,6 +36,27 @@ const Home = () => {
       <h4 className="slideBody"><Button onClick={() => navigate("/login")}>Register</Button></h4>
     </div>
   </Carousel>
+  <div className="favorites-div">
+
+  <ul className="list-group mt-4 mb-4">
+          <li className="list-group-item"><h2 className="m-0">Recent favorites</h2></li>
+    {allFavorites && allFavorites.slice(0,10).map((recipe) => (
+									<li key={recipe.recipeId} className="list-group-item">
+                    <div className="d-flex align-items-center">
+                    <span className="d-flex align-items-center">
+    {recipe.user.avatar ? <Avatar src={<Image src={recipe.user.avatar} style={{ width: 32 }} />} /> : <Avatar icon={<UserOutlined />} />}
+    <Link to={`/profile/${recipe.user._id}`} className='link px-1 pe-1'>@{recipe.user.username}</Link>
+    </span> 
+    favorited
+										<Link to={`/details/${recipe.recipeId}`} className="px-1 link">
+											{recipe.recipeName}
+										</Link>
+                    </div>
+
+									</li>
+							  ))}
+    </ul>
+  </div>
     </>
   );
 };

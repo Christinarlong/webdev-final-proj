@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createFavoriteThunk, deleteFavoriteThunk, findAllRecipesLikedByUserThunk, findUsersThatLikeRecipeThunk } from "./favorites-thunks";
+import { createFavoriteThunk, deleteFavoriteThunk, findAllFavoritesThunk, findAllRecipesLikedByUserThunk, findUsersThatLikeRecipeThunk } from "./favorites-thunks";
 
 const initialState = {
     likedByUser: [],
-    usersThatLikeRecipe: []
+    usersThatLikeRecipe: [],
+    allFavorites: []
 };
 
 const favoritesReducer = createSlice({
@@ -25,7 +26,10 @@ const favoritesReducer = createSlice({
     },
     [findUsersThatLikeRecipeThunk.fulfilled]: (state, action) => {
         state.usersThatLikeRecipe = action.payload.map(like => like.user._id);
-    }
+    },
+    [findAllFavoritesThunk.fulfilled]: (state, action) => {
+      state.allFavorites = action.payload;
+  }
   },
 });
 
