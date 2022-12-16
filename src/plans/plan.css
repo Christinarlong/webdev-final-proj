@@ -39,11 +39,11 @@ li.guests {
 
 .link {
     text-decoration: none;
-    color: black;
+    color: #0d6efd;
 }
 
 .link:hover {
-    color: #0d6efd;
+    color: #2f82ff;
 }
 
 .upvote:hover {

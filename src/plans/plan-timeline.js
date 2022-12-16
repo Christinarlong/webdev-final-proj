@@ -2,6 +2,7 @@ import { Card, Timeline, Checkbox  } from 'antd';
 import { Avatar } from 'antd';
 import { CloseCircleTwoTone, CheckCircleTwoTone, EditTwoTone, UserOutlined, ClockCircleTwoTone, SmileTwoTone, FrownTwoTone, PlusCircleTwoTone, PlusCircleOutlined} from '@ant-design/icons';
 import Accordion from 'react-bootstrap/Accordion';
+import { Link } from 'react-router-dom';
 
 import './plan.css';
 import PostCard from './post-card';
@@ -12,7 +13,9 @@ const PlanTimeline = ({posts, reverse = false}) => {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     return (
-        <Timeline mode={'left'} reverse={reverse} pending={<p className="p-1">Add more recipes!</p>} pendingDot={<PlusCircleTwoTone />} className="p-2">
+        <Timeline mode={'left'} reverse={reverse} pending={<Link to={'/explore'} className="link">
+        <p className='p-1'>Add more recipes!</p>
+    </Link>} pendingDot={<PlusCircleTwoTone />} className="p-2">
         {posts.map(post => {
             const postDate = new Date(post.date);
             if (postDate <= today) {
