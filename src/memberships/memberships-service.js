@@ -30,3 +30,13 @@ export const removeUserFromPlan = async ({pid, uid}) => {
     const response = await api.delete(`${BASE_API_URL}/memberships/${pid}/${uid}`);
     return response.data;
 }
+
+export const createPlan = async (name) => {
+    const response = await api.post(`${BASE_API_URL}/plans`, {name: name});
+    return response.data;
+}
+
+export const deletePlan = async (planId) => {
+    const response = await api.delete(`${BASE_API_URL}/plans/${planId}`);
+    return response.data;
+}

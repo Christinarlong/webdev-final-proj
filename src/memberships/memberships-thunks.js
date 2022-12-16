@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { getAllPlansForUser, getAllUsersForPlan, addUserToPlan, removeUserFromPlan, updateUserForPlan } from "./memberships-service.js";
+import { getAllPlansForUser, getAllUsersForPlan, addUserToPlan, removeUserFromPlan, updateUserForPlan, createPlan, deletePlan } from "./memberships-service.js";
 
 export const getAllPlansForUserThunk = createAsyncThunk(
     'getAllPlansForUser',
@@ -25,3 +25,14 @@ export const updateUserForPlanThunk = createAsyncThunk(
     'updateUserForPlan',
     (info) => updateUserForPlan(info)
 );
+
+export const createPlanThunk = createAsyncThunk(
+    'getPlanById',
+    (name) => createPlan(name)
+);
+
+export const deletePlanThunk = createAsyncThunk(
+    'deletePlan',
+    (pid) => deletePlan(pid)
+);
+

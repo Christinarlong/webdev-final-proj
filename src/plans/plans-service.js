@@ -9,3 +9,4 @@ export const getPlanById = async (pid) => {
     const response = await api.get(`${BASE_API_URL}/plans/${pid}`);
     return response.data;
 }
+

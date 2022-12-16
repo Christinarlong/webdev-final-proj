@@ -4,32 +4,32 @@ import { Link } from "react-router-dom";
 import { searchRecipeByTermThunk } from "./spoonacular-thunks";
 
 const SpoonacularSearch = () => {
-  const [searchTerm, setSearchTerm] = useState("pasta");
+  const [searchTerm, setSearchTerm] = useState("");
   const { recipes, loading } = useSelector((state) => state.spoonacular);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(searchRecipeByTermThunk(searchTerm));
-  }, []);
   return (
     <>
       <h1>Recipe Search</h1>
       <ul className="list-group">
         <li className="list-group-item">
-          <button
-            className="btn btn-primary float-end"
+          <div className="d-flex align-items-center">
+          <input
+            className="form-control"
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+            value={searchTerm}
+            placeholder="Search for recipes by term"
+          />
+                    <button
+            className="btn btn-primary ms-3"
             onClick={() => {
               dispatch(searchRecipeByTermThunk(searchTerm));
             }}
           >
             Search
           </button>
-          <input
-            className="form-control w-75"
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-            value={searchTerm}
-          />
+          </div>
         </li>
         {recipes &&
           recipes.map((recipe) => (
@@ -39,7 +39,6 @@ const SpoonacularSearch = () => {
             </li>
           ))}
       </ul>
-      <pre>{JSON.stringify(recipes, null, 2)}</pre>
     </>
   );
 };

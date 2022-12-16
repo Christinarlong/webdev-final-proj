@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllPlansForUserThunk, getAllUsersForPlanThunk, addUserToPlanThunk, removeUserFromPlanThunk, updateUserForPlanThunk } from "./memberships-thunks.js";
+import { getAllPlansForUserThunk, getAllUsersForPlanThunk, addUserToPlanThunk, removeUserFromPlanThunk, updateUserForPlanThunk, createPlanThunk, deletePlanThunk } from "./memberships-thunks.js";
 
 const initialState = {
     plansForUser: undefined,
@@ -101,6 +101,19 @@ const membershipsReducer = createSlice({
             }
         });
         state.usersForPlan = {owners: ownersArr, planners: plannersArr, guests: guestsArr};
+    },
+    [createPlanThunk.fulfilled]: (state, action) => {
+        let ownersArr = [...state.plansForUser.owners];
+        let plannersArr = [...state.plansForUser.planners];
+        let guestsArr = [...state.plansForUser.guests];
+        ownersArr.push(action.payload.plan);
+        state.plansForUser = {owners: ownersArr, planners: plannersArr, guests: guestsArr};
+    },
+    [deletePlanThunk.fulfilled]: (state, action) => {
+        const index = state.plansForUser.owners.findIndex(p => p._id === action.payload.deletedPlan._id);
+        if (index > -1) {
+            state.plansForUser.owners.splice(index, 1);
+        }
     },
   },
 });
