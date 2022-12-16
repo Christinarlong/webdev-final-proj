@@ -7,21 +7,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { findAllFavoritesThunk } from "../../favorites/favorites-thunks";
 import { UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { getAllUsersPostsThunk } from "../../posts/posts-thunks";
+import { cloneDeep } from "lodash";
+import PostCard from "../../plans/post-card";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.users);
   const { allFavorites } = useSelector(state => state.favorites);
+  const { posts } = useSelector((state) => state.posts);
 
   useEffect(() => {
 		dispatch(findAllFavoritesThunk());
-	}, []);
+    if (currentUser) {
+      dispatch(getAllUsersPostsThunk(currentUser?._id));
+    }
+	}, [currentUser]);
 
   return (
     <>
       <Carousel autoplay autoPlaySpeed={1000}>
       <div className="slide slide1 d-flex align-items-center justify-content-center flex-column">
-      <h1 className="slideHeader">Welcome!</h1>
+      <h1 className="slideHeader">Welcome{currentUser && ` back @${currentUser.username}`}!</h1>
       <h4 className="slideBody">Plan meals together with friends and family.</h4>
       <Spatula className="spatula" />
     </div>
@@ -30,18 +38,25 @@ const Home = () => {
     <h4 className="slideBody">Powered by Spoonacular API.</h4>
     <h4 className="slideBody"><Button onClick={() => navigate("/explore")}>Start searching</Button></h4>
     </div>
-    <div className="slide slide3 d-flex align-items-center justify-content-center flex-column">
+    {currentUser ? <div className="slide slide3 d-flex align-items-center justify-content-center flex-column">
+      <h1 className="slideHeader">Thanks for signing up!</h1>
+      <h4 className="slideBody">Invite your friends to WeCook too!</h4>
+    </div> : <div className="slide slide3 d-flex align-items-center justify-content-center flex-column">
       <h1 className="slideHeader">Sign up today!</h1>
       <h4 className="slideBody">Make a WeCook account for free.</h4>
       <h4 className="slideBody"><Button onClick={() => navigate("/login")}>Register</Button></h4>
     </div>
+    }
+    
   </Carousel>
-  <div className="favorites-div">
 
+  <div className="favorites-div">
   <ul className="list-group mt-4 mb-4">
-          <li className="list-group-item"><h2 className="m-0">Recent favorites</h2></li>
+          <li className="list-group-item"><h3 className="m-0">
+             Recent favorites <i className="bi bi-heart-fill pe-2 text-danger"
+								></i></h3></li>
     {allFavorites && allFavorites.slice(0,10).map((recipe) => (
-									<li key={recipe.recipeId} className="list-group-item">
+									<li key={recipe.recipeId + recipe.user._id} className="list-group-item">
                     <div className="d-flex align-items-center">
                     <span className="d-flex align-items-center">
     {recipe.user.avatar ? <Avatar src={<Image src={recipe.user.avatar} style={{ width: 32 }} />} /> : <Avatar icon={<UserOutlined />} />}
@@ -57,6 +72,26 @@ const Home = () => {
 							  ))}
     </ul>
   </div>
+
+  {currentUser && <div className="top-posts-div d-flex flex-column justify-content-center">
+  <ul className="list-group mt-4 mb-4">
+            <h3 className="m-0">Your most recent posts 
+          <i className="bi bi-stars pe-2 text-warning"></i>
+          </h3>
+          <div></div>
+          {posts && posts.slice(0,3).map((post) => {
+								const newPost = cloneDeep(post);
+								console.log(newPost);
+
+								newPost["user"] = {
+									username: currentUser?.username,
+									_id: currentUser?._id,
+									avatar: "",
+								};
+								return <div className="p-2"><PostCard post={newPost} className="profile-card" /></div>
+							})}
+              </ul>
+    </div>}
     </>
   );
 };
