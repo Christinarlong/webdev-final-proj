@@ -19,6 +19,7 @@ import Users from "./users";
 import Logout from "./users/logout";
 import usersReducer from "./users/users-reducer";
 import PrivateProfile from "./users/PrivateProfile";
+import postsReducer from "./posts/posts-reducer";
 import favoritesReducer from "./favorites/favorites-reducer";
 import membershipsReducer from "./memberships/memberships-reducer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -32,7 +33,8 @@ const store = configureStore({
     favorites: favoritesReducer,
     memberships: membershipsReducer,
     plans: plansReducer,
-  },
+		posts: postsReducer,
+	},
 });
 
 function App() {
