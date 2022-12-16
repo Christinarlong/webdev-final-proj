@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllPlansForUserThunk } from "../memberships/memberships-thunks.js";
-import './plan-list.css';
+import './plan.css';
 
 const PlanList = () => {
   const {currentUser} = useSelector((state) => state.users)

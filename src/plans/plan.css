@@ -1,0 +1,32 @@
+li.owners {
+    background-color: rgb(247, 226, 255);
+}
+
+li.planners {
+    background-color: rgb(235, 255, 228);
+}
+
+li.guests {
+    background-color: rgb(255, 247, 226);
+}
+
+.role-text {
+    opacity: 50%;
+}
+
+.closeButton {
+    color: grey
+}
+
+.closeButton:hover {
+    color: red
+}
+
+.list-group-card .list-group-item {
+    border-color: #f0f0f0;
+    background-color: transparent;
+}
+
+.edit-button:hover {
+    color: #0d6efd; /* bootstrap primary color */
+}
