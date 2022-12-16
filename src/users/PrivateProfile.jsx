@@ -126,6 +126,7 @@ const PublicProfile = () => {
 									<li key={post._id} className="list-group-item">
 										<img src={post.img} height={50} alt={post.img} />
 										<Link to={`/plan/${post.plan._id}`}>{post.recipeName}</Link>
+										<span>Created on: {new Date(post.dateCreated).toLocaleString()}</span>
 									</li>
 								))}
 						</ul>
